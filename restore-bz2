@@ -1,0 +1,22 @@
+#!/bin/bash
+## Created by Georgi Patsev
+## https://github.com/BaiGeorgi/backup-scripts
+## Please read GPLv3! https://www.gnu.org/licenses/gpl-3.0.html
+display_usage() { 
+	echo "Run the script with two parameters /path/to/the/input.img.bz2 and /dev/[output]" 
+	echo -e "Example:"
+	echo -e "./restore-bz2 in.img.bz2 /dev/sda"
+}
+	if [  $# -le 1 ] # if less than two arguments supplied, display usage
+	 then 
+	 display_usage
+	 exit 1
+	fi
+	if [[ ( $# == "--help") ||  $# == "-h" ]] # check whether user had supplied -h or --help . If yes display usage
+	 then 
+	 display_usage
+	 exit 0
+	fi
+FILE="$1"
+DISK="$2"
+bunzip2 -dc "$FILE" | dd of="$DISK"

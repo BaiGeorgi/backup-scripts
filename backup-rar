@@ -1,0 +1,26 @@
+#!/bin/bash
+## Created by Georgi Patsev
+## https://github.com/BaiGeorgi/backup-scripts
+## Please read GPLv3! https://www.gnu.org/licenses/gpl-3.0.html
+## RAR is a proprietary archive file format that supports data compression, error recovery and file spanning. It is licensed by win.rar GmbH.
+display_usage() { 
+	echo "Run the script with two parameters /dev/[input] and output" 
+	echo -e "Example:"
+	echo -e "./backup-rar /dev/sda bacup"
+	echo -e "will create file backup.img.rar"
+}
+	if [  $# -le 1 ] # if less than two arguments supplied, display usage
+	 then 
+	 display_usage
+	 exit 1
+	fi
+	if [[ ( $# == "--help") ||  $# == "-h" ]] # check whether user had supplied -h or --help . If yes display usage
+	 then 
+	 display_usage
+	 exit 0
+	fi
+RARSPLIT=500M
+RARPATH=rar
+DISK="$1"
+FILE="$2"
+dd if="$DISK" | "$RARPATH" a -m5 -v"$RARSPLIT" -si"$FILE".img "$FILE".img.rar
