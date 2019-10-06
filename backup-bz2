@@ -5,7 +5,7 @@
 display_usage() { 
 	echo "Run the script with two parameters /dev/[input] and output" 
 	echo -e "Example:"
-	echo -e "./backup-bz2 /dev/sda bacup"
+	echo -e "./backup-bz2 /dev/sda backup"
 	echo -e "will create file backup.img.bz2"
 }
 	if [  $# -le 1 ] # if less than two arguments supplied, display usage
@@ -20,4 +20,4 @@ display_usage() {
 	fi
 DISK="$1"
 FILE="$2"
-dd if="$DISK" | bzip2 -9f >"$FILE".img.bz2
+dd if="$DISK" bs=4M | bzip2 -9f >"$FILE".img.bz2
