@@ -21,4 +21,4 @@ display_usage() {
 RARPATH=rar
 FILE="$1"
 DISK="$2"
-"$RARPATH" p -inul "$FILE" | dd of="$DISK"
+"$RARPATH" p -inul "$FILE" | dd of="$DISK" bs=4M
