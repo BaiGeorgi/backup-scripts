@@ -6,7 +6,7 @@
 display_usage() { 
 	echo "Run the script with two parameters /dev/[input] and output" 
 	echo -e "Example:"
-	echo -e "./backup-rar /dev/sda bacup"
+	echo -e "./backup-rar /dev/sda backup"
 	echo -e "will create file backup.img.rar"
 }
 	if [  $# -le 1 ] # if less than two arguments supplied, display usage
@@ -23,4 +23,4 @@ RARSPLIT=500M
 RARPATH=rar
 DISK="$1"
 FILE="$2"
-dd if="$DISK" | "$RARPATH" a -m5 -v"$RARSPLIT" -si"$FILE".img "$FILE".img.rar
+dd if="$DISK" bs=4M | "$RARPATH" a -m5 -v"$RARSPLIT" -si"$FILE".img "$FILE".img.rar
