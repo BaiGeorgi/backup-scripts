@@ -19,4 +19,4 @@ display_usage() {
 	fi
 FILE="$1"
 DISK="$2"
-bunzip2 -dc "$FILE" | dd of="$DISK"
+bunzip2 -dc "$FILE" | dd of="$DISK"  bs=4M
