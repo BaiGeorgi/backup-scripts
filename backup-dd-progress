@@ -1,0 +1,28 @@
+#!/bin/bash
+## Created by Georgi Patsev
+## https://github.com/BaiGeorgi/backup-scripts
+## Please read GPLv3! https://www.gnu.org/licenses/gpl-3.0.html
+display_usage() { 
+	echo "Run the script with two parameters /dev/[input] and output" 
+	echo -e "Example:"
+	echo -e "./backup-dd-progress /dev/sda backup"
+	echo -e "will create file backup.img"
+	echo -e "\nDirve list:"
+	lsblk -f
+	echo -e "\nBackups list:"
+	ls *.img
+}
+	if [  $# -le 1 ] # if less than two arguments supplied, display usage
+	 then 
+	 display_usage
+	 exit 1
+	fi
+	if [[ ( $# == "--help") ||  $# == "-h" ]] # check whether user had supplied -h or --help . If yes display usage
+	 then 
+	 display_usage
+	 exit 0
+	fi
+DISK="$1"
+FILE="$2"
+lsblk -f | grep "$DISK"
+dd if="$DISK" of="$FILE".img bs=4M iflag=fullblock oflag=direct status=progress; sync ## You can see the input and the output size, drink some cofee and return later.
