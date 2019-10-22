@@ -6,6 +6,10 @@ display_usage() {
 	echo "Run the script with two parameters /path/to/the/input.img.bz2 and /dev/[output]" 
 	echo -e "Example:"
 	echo -e "./restore-xz in.img.xz /dev/sda"
+	echo -e "\nDirve list:"
+	lsblk -f
+	echo -e "\nBackups list:"
+	ls *.xz
 }
 	if [  $# -le 1 ] # if less than two arguments supplied, display usage
 	 then 
@@ -19,4 +23,7 @@ display_usage() {
 	fi
 FILE="$1"
 DISK="$2"
-xz -dcq "$FILE" | dd of="$DISK" bs=4M
+sync
+xz -l "$FILE"
+#xz -dcq "$FILE" | dd of="$DISK" bs=4M
+xzcat "$FILE" | dd bs=4M of="$DISK" iflag=fullblock oflag=direct status=progress; sync #With progress
