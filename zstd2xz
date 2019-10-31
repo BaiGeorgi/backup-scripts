@@ -1,0 +1,26 @@
+#!/bin/bash
+## Created by Georgi Patsev
+## https://github.com/BaiGeorgi/backup-scripts
+## Please read GPLv3! https://www.gnu.org/licenses/gpl-3.0.html
+display_usage() { 
+	echo "Run the script with two parameters input.zst and output[the script will add xz extension]" 
+	echo -e "Example:"
+	echo -e "./zstd2xz backup.zst backup"
+	echo -e "Will convert the archive with stdout and stdin."
+	echo -e "\nArchives list:"
+	ls *.zst
+	ls *.xz
+}
+	if [  $# -le 1 ] # if less than two arguments supplied, display usage
+	 then 
+	 display_usage
+	 exit 1
+	fi
+	if [[ ( $# == "--help") ||  $# == "-h" ]] # check whether user had supplied -h or --help . If yes display usage
+	 then 
+	 display_usage
+	 exit 0
+	fi
+ZSTD="$1"
+XZ="$2"
+zstd -dc "$ZSTD" | xz -T0 -vv9e > "$XZ".img.xz ## You can see the input and the output size, drink some cofee and return later.
